@@ -1,36 +1,50 @@
 "use strict";
 var generateBtn = document.querySelector("#generate");
 
-function generatePassword(length, haveLowerCase, haveUpperCase, haveNumbers, haveSpecial){
+function generatePassword(length, restrictions){
   let lower = "abcdefghijklmnop";
   let upper = "ABCDEFGHIJKLMNOP";
   let numbers = "123456789";
   let special = "~`!@#$%^&*()_+[{]}\\|;:\'\",<.>/?";
+
   
-  let password = "fdsa";
+  let password = "";
   return password;
+}
+
+function promptLength(){
+  // prompt user and cast the input value as a number
+  let passLength = Number(window.prompt("Choose password length from 8 to 128:"));
+
+  // if the input value isn't a number or within 8-128 then re-prompt the user
+  while(!Number.isInteger(passLength) || passLength < 8 || passLength > 128){
+    passLength = Number(window.prompt("Error. Please choose password length from 8 to 128:"));
+  }
+  return passLength;
+}
+
+function promptRestrictions(){
+  // lowercase, uppercase, numeric, and/or special characters
+  let lowerCase = window.confirm("Should it include lowercase characters?");
+  let upperCase = window.confirm("Should it include uppercase characters?");
+  let numeric = window.confirm("Should it include numeric characters?");
+  let special = window.confirm("Should it include special characters?");
+  return [lowerCase, upperCase, numeric, special];
 }
 
 // Write password to the #password input
 function writePassword() {
   // prompt user and cast the input value as a number
-  var passLength = Number(window.prompt("Choose password length from 8 to 128:"));
+  let passLength = promptLength();
+  let restrictions = promptRestrictions();
 
   // if the input value isn't a number or within 8-128 then re-prompt the user
   while(!Number.isInteger(passLength) || passLength < 8 || passLength > 128){
     passLength = Number(window.prompt("Error. Please choose password length from 8 to 128:"));
   }
 
-  // lowercase, uppercase, numeric, and/or special characters
-  var lowerCase = window.confirm("Should it include lowercase characters?");
-  var upperCase = window.confirm("Should it include uppercase characters?");
-  var numeric = window.confirm("Should it include numeric characters?");
-  var special = window.confirm("Should it include special characters?");
 
-
-
-  
-  var password = generatePassword(passLength, lowerCase, upperCase, numeric, special);
+  var password = generatePassword(passLength, restrictions);
   var passwordText = document.querySelector("#password");
 
   passwordText.value = password;
