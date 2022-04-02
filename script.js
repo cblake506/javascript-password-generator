@@ -20,8 +20,8 @@ function generatePassword(passLength, restrictions){
       let randIndex = Math.floor(Math.random() * pool[restrictionsIterator].length);
       // appending the next character
       orderedPass += pool[restrictionsIterator].charAt(randIndex);
-      count++;
     }
+    count++;
   }
 
   let password = "";
@@ -48,11 +48,21 @@ function promptLength(){
 
 function promptRestrictions(){
   // lowercase, uppercase, numeric, and/or special characters
-  let lowerCase = window.confirm("Should it include lowercase characters?");
-  let upperCase = window.confirm("Should it include uppercase characters?");
-  let numeric = window.confirm("Should it include numeric characters?");
-  let special = window.confirm("Should it include special characters?");
-  return [lowerCase, upperCase, numeric, special];
+  let lowerCase = false;
+  let upperCase = false;
+  let numeric = false;
+  let special = false;
+  while(!lowerCase && !upperCase && !numeric && !special){
+    lowerCase = window.confirm("Should it include lowercase characters?");
+    upperCase = window.confirm("Should it include uppercase characters?");
+    numeric = window.confirm("Should it include numeric characters?");
+    special = window.confirm("Should it include special characters?");
+    if(!lowerCase && !upperCase && !numeric && !special){
+      window.alert("Error, please select at least 1 character type")
+    } else{
+      return [lowerCase, upperCase, numeric, special];
+    }
+  }
 }
 
 // Write password to the #password input
